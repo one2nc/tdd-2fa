@@ -1,6 +1,14 @@
 from unittest import TestCase
 from server import Config, register_device, validate_device_otp
 
+"""
+Config is a dataclass created in server with the following attributes:
+device_id: int
+otp_expiry: int
+otp_length: int
+otp_secret: str
+"""
+
 
 class Test(TestCase):
     def test_register_device(self):
