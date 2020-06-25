@@ -1,7 +1,3 @@
-from wsgiref.util import request_uri
-
-from dataclasses import dataclass
-from modules.otp.functions import generate_secret, generate_otp
 from flask import Flask, request
 import server.logic as logic
 app = Flask(__name__)
