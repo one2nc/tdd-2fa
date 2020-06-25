@@ -1,23 +1,15 @@
+import string
 import time
 from hashlib import sha256
 from math import floor
+import random
 
 
 def truncate_otp(otp, expected_length=6):
-    """
-    :param otp: str
-    :param expected_length: int
-    :return: str
-    """
     return otp[-expected_length:]
 
 
 def hash_function(key, message):
-    """
-    :param key: str
-    :param message: str
-    :return: str
-    """
     if not isinstance(key, str):
         key = str(key)
     if not isinstance(message, str):
@@ -28,27 +20,15 @@ def hash_function(key, message):
     return str(binary)
 
 
-def generate_otp(otp_secret, otp_expiry=30, otp_length=6, coefficient=None):
-    """
-    :param otp_secret: str
-    :param otp_expiry: int
-    :param otp_length: int
-    :param coefficient: int
-    :return: str
-    """
+def generate_otp(otp_secret, otp_expiry=30, coefficient=None):
     hash_value = None
     if coefficient is None:
         coefficient = floor(time.time())
     if otp_expiry != 0:
         message = str(floor(int(coefficient) / otp_expiry))
         hash_value = hash_function(otp_secret, message)
-    return truncate_otp(hash_value, otp_length)
+    return hash_value
 
 
-def generate_secret(otp_length=6, otp_expiry=30):
-    """
-    :param otp_length: int
-    :param otp_expiry: int
-    :return: str
-    """
-    return "{}.{}.hello".format(otp_length, otp_expiry)
+def generate_secret():
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=16))
