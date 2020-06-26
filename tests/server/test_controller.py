@@ -11,7 +11,8 @@ class Test(TestCase):
         self.app = app.test_client()
         self.app.testing = True
         self.device_id = 1
-        self.response = self.app.post("/register", json={"device_id": self.device_id})
+        self.response = self.app.post("/register",
+                                      json={"device_id": self.device_id})
 
     def tearDown(self):
         pass
@@ -26,12 +27,15 @@ class Test(TestCase):
         self.assertEqual(200, response.status_code)
 
     def test_validate_otp(self):
-        otp = truncate_otp(otp=generate_otp(otp_expiry=30, otp_secret=self.response.json.get("secret")))
-        response = self.app.get("/validate/{}".format(self.device_id), json={"OTP": otp})
+        otp = truncate_otp(otp=generate_otp(
+            otp_expiry=30, otp_secret=self.response.json.get("secret")))
+        response = self.app.get("/validate/{}".format(self.device_id),
+                                json={"OTP": otp})
         self.assertEqual(True, response.json.get("is_valid"))
         self.assertEqual(200, response.status_code)
 
     def test_get_secret(self):
         response = self.app.get("/get_secret/{}".format(self.device_id))
-        self.assertEqual(self.response.json.get("secret"), response.json.get("secret"))
+        self.assertEqual(self.response.json.get("secret"),
+                         response.json.get("secret"))
         self.assertEqual(200, response.status_code)

@@ -4,6 +4,9 @@ launch:
 generate_otp:
 	python device/device.py --device-id ${DEVICE_ID}
 
+lint:
+	flake8 --exclude=venv
+
 deps:
 	pip install -r requirements.txt
 

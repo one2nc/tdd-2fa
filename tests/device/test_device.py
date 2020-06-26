@@ -12,7 +12,8 @@ class Test(TestCase):
             app.env = "Testing"
             self.server_process = Process(target=app.run)
             self.server_process.start()
-            self.register_resp = register(url=self.url, device_id=self.device_id)
+            self.register_resp = register(url=self.url,
+                                          device_id=self.device_id)
 
     def tearDown(self):
         self.server_process.terminate()
@@ -28,4 +29,5 @@ class Test(TestCase):
 
     def test_generate_device_otp(self):
         otp_secret = "MLI30O3KJLYWMHO5"
-        self.assertEqual("201717", generate_device_otp(otp_secret=otp_secret, coefficient=1234))
+        self.assertEqual("201717", generate_device_otp(otp_secret=otp_secret,
+                                                       coefficient=1234))
