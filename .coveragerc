@@ -1,0 +1,3 @@
+[run]
+source=$PWD
+omit=$PWD/venv/*
