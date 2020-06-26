@@ -24,6 +24,7 @@ def generate_otp(otp_secret, otp_expiry=30, coefficient=None):
     hash_value = None
     if coefficient is None:
         coefficient = floor(time.time())
+
     if otp_expiry != 0:
         message = str(floor(int(coefficient) / otp_expiry))
         hash_value = hash_function(otp_secret, message)

@@ -16,8 +16,9 @@ def register():
 @app.route("/is_registered/<device_id>", methods=["GET"])
 def is_registered(device_id):
     if logic.get_device_info(device_id):
-        return {"is_registered": True}
-
+        return {
+            "is_registered": True
+        }
     return {"is_registered": False}
 
 

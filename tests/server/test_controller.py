@@ -1,6 +1,6 @@
 from unittest import TestCase
 from server.controller import app
-from modules.otp.functions import generate_secret, generate_otp, truncate_otp
+from modules.otp.functions import generate_otp, truncate_otp
 
 
 class Test(TestCase):
@@ -10,13 +10,10 @@ class Test(TestCase):
         self.app = app.test_client()
         self.app.testing = True
         self.device_id = 1
-        self.response = self.register()
+        self.response = self.app.post("/register", json={"device_id": self.device_id})
 
     def tearDown(self):
         pass
-
-    def register(self):
-        return self.app.post("/register", json={"device_id": self.device_id})
 
     def test_register(self):
         self.assertEqual(True, self.response.json.get("registered"))
