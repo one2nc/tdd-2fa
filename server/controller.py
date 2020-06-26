@@ -1,6 +1,7 @@
 from flask import Flask, request
 import server.logic as logic
 app = Flask(__name__)
+app.env = "Production"
 
 
 @app.route("/register", methods=["POST"])
@@ -22,10 +23,17 @@ def is_registered(device_id):
     return {"is_registered": False}
 
 
+@app.route("/get_secret/<device_id>", methods=["GET"])
+def get_secret(device_id):
+    return {
+        "secret": logic.get_device_info(device_id=device_id).secret
+    }
+
+
 @app.route("/validate/<device_id>", methods=["GET"])
 def validate_otp(device_id):
     received_otp = request.get_json().get("OTP")
-    if logic.validate_otp(device_id=device_id, received_otp=received_otp):
+    if logic.validate_otp(device_id=device_id, received_otp=str(received_otp)):
         return {"is_valid": True}
 
     return {"is_valid": False}

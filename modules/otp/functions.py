@@ -6,7 +6,7 @@ import random
 
 
 def truncate_otp(otp, expected_length=6):
-    return otp[-expected_length:]
+    return str(otp[-expected_length:])
 
 
 def hash_function(key, message):

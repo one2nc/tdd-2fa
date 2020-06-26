@@ -9,6 +9,7 @@ class Test(TestCase):
         self.url = "http://127.0.0.1:5000"
         self.device_id = 1
         with app.app_context():
+            app.env = "Testing"
             self.server_process = Process(target=app.run)
             self.server_process.start()
             self.register_resp = register(url=self.url, device_id=self.device_id)
